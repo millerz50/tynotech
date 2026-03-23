@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Search, ShoppingCart, User, ChevronDown } from "lucide-react";
+import { Search, ShoppingCart, User, ChevronDown, Home, ShoppingBag, Phone } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Navbar() {
   const cartItemCount = 3; // Example badge count
@@ -42,7 +43,7 @@ export default function Navbar() {
         {/* ACTIONS */}
         <div className="flex items-center gap-4 relative">
           {/* Cart Button */}
-          <button className="relative flex items-center gap-2 bg-[#1E40AF] dark:bg-[#1E3A8A] text-white px-4 py-2 rounded-full shadow-md hover:bg-[#15326A] dark:hover:bg-[#1E40AF] transition font-semibold">
+          <Link href="/shop" className="relative flex items-center gap-2 bg-[#1E40AF] dark:bg-[#1E3A8A] text-white px-4 py-2 rounded-full shadow-md hover:bg-[#15326A] dark:hover:bg-[#1E40AF] transition font-semibold">
             <ShoppingCart size={20} />
             <span className="hidden sm:block">Cart</span>
 
@@ -52,7 +53,7 @@ export default function Navbar() {
                 {cartItemCount}
               </span>
             )}
-          </button>
+          </Link>
 
           {/* Profile Dropdown */}
           <div className="relative">
@@ -67,30 +68,27 @@ export default function Navbar() {
             {/* Dropdown Menu */}
             {dropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                <Link
+                  href="/"
+                  className="flex items-center gap-2 px-4 py-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
                 >
-                  Profile
-                </a>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                  <Home size={16} /> Home
+                </Link>
+                <Link
+                  href="/shop"
+                  className="flex items-center gap-2 px-4 py-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
                 >
-                  Orders
-                </a>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                  <ShoppingBag size={16} /> Shop
+                </Link>
+                <Link
+                  href="/contact"
+                  className="flex items-center gap-2 px-4 py-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
                 >
-                  Settings
-                </a>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
-                >
+                  <Phone size={16} /> Contact
+                </Link>
+                <button className="w-full text-left px-4 py-2 text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
                   Logout
-                </a>
+                </button>
               </div>
             )}
           </div>
@@ -118,24 +116,24 @@ export default function Navbar() {
           {/* Mobile Menu */}
           {mobileMenuOpen && (
             <div className="absolute top-full right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50 md:hidden">
-              <a
-                href="#"
-                className="block px-4 py-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+              <Link
+                href="/"
+                className="flex items-center gap-2 px-4 py-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
               >
-                Home
-              </a>
-              <a
-                href="#"
-                className="block px-4 py-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                <Home size={16} /> Home
+              </Link>
+              <Link
+                href="/shop"
+                className="flex items-center gap-2 px-4 py-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
               >
-                Shop
-              </a>
-              <a
-                href="#"
-                className="block px-4 py-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                <ShoppingBag size={16} /> Shop
+              </Link>
+              <Link
+                href="/contact"
+                className="flex items-center gap-2 px-4 py-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
               >
-                Contact
-              </a>
+                <Phone size={16} /> Contact
+              </Link>
             </div>
           )}
         </div>
