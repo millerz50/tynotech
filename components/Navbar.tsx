@@ -12,8 +12,10 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+  const pathname = usePathname();
   const cartItemCount = 3; // Example badge count
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -48,16 +50,23 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-6">
-          {navLinks.map((link) => (
-            <Link
-              key={link.title}
-              href={link.href}
-              className="flex items-center gap-1 text-gray-800 dark:text-gray-100 font-medium hover:text-[#1E40AF] dark:hover:text-[#60A5FA] transition"
-            >
-              {link.icon}
-              <span>{link.title}</span>
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.title}
+                href={link.href}
+                className={`flex items-center gap-1 font-medium transition ${
+                  isActive
+                    ? "text-[#1E40AF] dark:text-[#60A5FA] border-b-2 border-[#1E40AF] dark:border-[#60A5FA]"
+                    : "text-gray-800 dark:text-gray-100 hover:text-[#1E40AF] dark:hover:text-[#60A5FA]"
+                }`}
+              >
+                {link.icon}
+                <span>{link.title}</span>
+              </Link>
+            );
+          })}
         </div>
 
         {/* SEARCH BAR */}
@@ -97,7 +106,7 @@ export default function Navbar() {
             </button>
 
             {dropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
+              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50 origin-top-right scale-95 opacity-0 animate-scaleIn">
                 <button className="w-full text-left px-4 py-2 text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
                   Logout
                 </button>
@@ -127,12 +136,16 @@ export default function Navbar() {
 
           {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="absolute top-full right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50 md:hidden">
+            <div className="absolute top-full right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50 md:hidden origin-top-right scale-95 opacity-0 animate-scaleIn">
               {navLinks.map((link) => (
                 <Link
                   key={link.title}
                   href={link.href}
-                  className="flex items-center gap-2 px-4 py-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                  className={`flex items-center gap-2 px-4 py-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition ${
+                    pathname === link.href
+                      ? "text-[#1E40AF] dark:text-[#60A5FA] font-semibold"
+                      : ""
+                  }`}
                 >
                   {link.icon}
                   {link.title}
@@ -142,6 +155,23 @@ export default function Navbar() {
           )}
         </div>
       </div>
+
+      {/* Tailwind animations */}
+      <style jsx>{`
+        .animate-scaleIn {
+          animation: scaleIn 0.15s ease-out forwards;
+        }
+        @keyframes scaleIn {
+          0% {
+            transform: scale(0.95);
+            opacity: 0;
+          }
+          100% {
+            transform: scale(1);
+            opacity: 1;
+          }
+        }
+      `}</style>
     </nav>
   );
 }
