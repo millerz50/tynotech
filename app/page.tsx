@@ -1,12 +1,15 @@
-import Navbar from "@/components/Navbar";
-import PerfumeAd from "@/components/PerfumeAd";
-import ProductCard from "@/components/ProductCard";
-import { Ad, LaptopProduct } from "@/types";
+"use client";
 
-// This is now a server component
-export default async function HomePage() {
-  // Fetch products and ads server-side
-  // You can replace this with a real API call
+import Navbar from "@/components/Navbar";
+import ProductCard from "@/components/ProductCard";
+import PerfumeAd from "@/components/PerfumeAd";
+import ServicesSection from "@/components/ServicesSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
+import Footer from "@/components/Footer";
+import { LaptopProduct, Ad } from "@/types";
+
+export default function Home() {
+  // Example Products
   const products: LaptopProduct[] = [
     {
       id: "1",
@@ -44,6 +47,7 @@ export default async function HomePage() {
     },
   ];
 
+  // Example Ad
   const ad: Ad = {
     id: "ad1",
     title: "Luxury Perfume Sale",
@@ -54,22 +58,30 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Navbar */}
+      <Navbar />
 
-      <div className="container mx-auto px-4 py-6">
-        <div className="flex flex-col lg:flex-row gap-6">
-          {/* Products */}
-          <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+      {/* Products + Ad Section */}
+      <div className="container mx-auto px-4 py-6 flex flex-col lg:flex-row gap-6">
+        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
 
-          {/* Ads */}
-          <div className="w-full lg:w-80 flex-shrink-0">
-            <PerfumeAd ad={ad} />
-          </div>
+        <div className="w-full lg:w-80 flex-shrink-0">
+          <PerfumeAd ad={ad} />
         </div>
       </div>
+
+      {/* Services Section */}
+      <ServicesSection />
+
+      {/* Testimonials Section */}
+      <TestimonialsSection />
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
