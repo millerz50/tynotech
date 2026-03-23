@@ -1,15 +1,26 @@
 "use client";
 
-import { Search, ShoppingCart, User } from "lucide-react";
+import { useState } from "react";
+import { Search, ShoppingCart, User, ChevronDown } from "lucide-react";
+import Image from "next/image";
 
 export default function Navbar() {
   const cartItemCount = 3; // Example badge count
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <nav className="w-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-md sticky top-0 z-50 border-b border-gray-200 dark:border-gray-700">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* LOGO */}
-        <div className="flex items-center gap-1 cursor-pointer">
+        <div className="flex items-center gap-2 cursor-pointer">
+          <Image
+            src="/tymo-logo.png"
+            alt="Tymo Logo"
+            width={36}
+            height={36}
+            className="object-contain"
+          />
           <span className="text-2xl font-extrabold text-[#1E40AF] dark:text-[#60A5FA]">
             Tymo
           </span>
@@ -29,7 +40,7 @@ export default function Navbar() {
         </div>
 
         {/* ACTIONS */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 relative">
           {/* Cart Button */}
           <button className="relative flex items-center gap-2 bg-[#1E40AF] dark:bg-[#1E3A8A] text-white px-4 py-2 rounded-full shadow-md hover:bg-[#15326A] dark:hover:bg-[#1E40AF] transition font-semibold">
             <ShoppingCart size={20} />
@@ -43,13 +54,52 @@ export default function Navbar() {
             )}
           </button>
 
-          {/* Profile Button */}
-          <button className="w-10 h-10 rounded-full bg-gradient-to-br from-[#1E40AF] to-[#9333EA] flex items-center justify-center text-white shadow-md hover:shadow-lg transition">
-            <User size={20} />
-          </button>
+          {/* Profile Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+              className="w-10 h-10 rounded-full bg-gradient-to-br from-[#1E40AF] to-[#9333EA] flex items-center justify-center text-white shadow-md hover:shadow-lg transition focus:outline-none"
+            >
+              <User size={20} />
+              <ChevronDown className="w-3 h-3 ml-1" />
+            </button>
+
+            {/* Dropdown Menu */}
+            {dropdownOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
+                <a
+                  href="#"
+                  className="block px-4 py-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                >
+                  Profile
+                </a>
+                <a
+                  href="#"
+                  className="block px-4 py-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                >
+                  Orders
+                </a>
+                <a
+                  href="#"
+                  className="block px-4 py-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                >
+                  Settings
+                </a>
+                <a
+                  href="#"
+                  className="block px-4 py-2 text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                >
+                  Logout
+                </a>
+              </div>
+            )}
+          </div>
 
           {/* Mobile Menu Hamburger */}
-          <button className="md:hidden p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+          <button
+            className="md:hidden p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
             <svg
               className="w-6 h-6 text-gray-800 dark:text-gray-200"
               fill="none"
@@ -64,6 +114,30 @@ export default function Navbar() {
               />
             </svg>
           </button>
+
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="absolute top-full right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50 md:hidden">
+              <a
+                href="#"
+                className="block px-4 py-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+              >
+                Home
+              </a>
+              <a
+                href="#"
+                className="block px-4 py-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+              >
+                Shop
+              </a>
+              <a
+                href="#"
+                className="block px-4 py-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+              >
+                Contact
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </nav>
