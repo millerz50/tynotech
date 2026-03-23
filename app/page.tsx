@@ -3,38 +3,10 @@ import PerfumeAd from "@/components/PerfumeAd";
 import ProductCard from "@/components/ProductCard";
 import { Ad, LaptopProduct } from "@/types";
 
-interface HomeProps {
-  products: LaptopProduct[];
-  ad: Ad;
-}
-
-export default function Home({ products, ad }: HomeProps) {
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Navbar />
-
-      <div className="container mx-auto px-4 py-6">
-        <div className="flex flex-col lg:flex-row gap-6">
-          {/* Products */}
-          <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-
-          {/* Ads */}
-          <div className="w-full lg:w-80 flex-shrink-0">
-            <PerfumeAd ad={ad} />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// Use getServerSideProps for SSR
-export async function getServerSideProps() {
-  // Example: fetch products from API or database
+// This is now a server component
+export default async function HomePage() {
+  // Fetch products and ads server-side
+  // You can replace this with a real API call
   const products: LaptopProduct[] = [
     {
       id: "1",
@@ -80,10 +52,25 @@ export async function getServerSideProps() {
     type: "perfume",
   };
 
-  return {
-    props: {
-      products,
-      ad,
-    },
-  };
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <Navbar />
+
+      <div className="container mx-auto px-4 py-6">
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Products */}
+          <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+
+          {/* Ads */}
+          <div className="w-full lg:w-80 flex-shrink-0">
+            <PerfumeAd ad={ad} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
