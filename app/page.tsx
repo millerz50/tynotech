@@ -1,3 +1,5 @@
+"use client";
+
 import Navbar from "@/components/Navbar";
 import PerfumeAd from "@/components/PerfumeAd";
 import ProductCard from "@/components/ProductCard";
@@ -50,20 +52,22 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Navbar />
 
-      <div className="grid grid-cols-4 gap-4 p-4">
-        {/* Products */}
-        <div className="col-span-3 grid grid-cols-3 gap-4">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+      <div className="container mx-auto px-4 py-6">
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Products */}
+          <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
 
-        {/* Ads */}
-        <div>
-          <PerfumeAd ad={ad} />
+          {/* Ads */}
+          <div className="w-full lg:w-80 flex-shrink-0">
+            <PerfumeAd ad={ad} />
+          </div>
         </div>
       </div>
     </div>
